@@ -145,6 +145,42 @@ const actors = [{
     'amount': 0
   }]
 }];
+function price(){
+	var timeComponent;
+	var peopleComponent;
+	for(var i=0;i<bars.length;i++)
+	{
+		for(var j=0;j<events.length;j++)
+		{
+			if(bars[i].id==events[j].barId)
+			{
+				timeComponent=events[j].time*bars[i].pricePerHour;
+				peopleComponent=events[j].persons*bars[i].pricePerPerson;
+				events[j].price=timeComponent+peopleComponent;
+			}
+		}
+	}
+}
+function priceDecrease(){
+
+	for(var j=0;j<events.length;j++)
+		{
+			if(events[j].persons>10&&events[j].persons<=20)
+			{
+				events[j].price=0.9*events[j].price;
+			}
+			if(events[j].persons>20&&events[j].persons<=60)
+			{
+				events[j].price=0.7*events[j].price;
+			}
+			if(events[j].persons>60)
+			{
+				events[j].price=0.5*events[j].price;
+			}
+		}
+}
+price();
+priceDecrease();
 
 console.log(bars);
 console.log(events);
