@@ -179,9 +179,59 @@ function priceDecrease(){
 			}
 		}
 }
-price();
-priceDecrease();
-
-console.log(bars);
+function Commission()
+{
+	var commission;
+	for(var j=0;j<events.length;j++)
+	{
+		commission=events[j].price*0.3;
+		events[j].commission.insurance=commission/2;;
+		events[j].commission.treasury=events[j].persons;
+		events[j].commission.privateaser=commission-events[j].commission.insurance-events[j].commission.treasury;
+			
+	}	
+}
+function Deduction()
+{
+	price();
+	priceDecrease();
+	Commission();
+	for(var j=0;j<events.length;j++)
+	{
+		if(events[j].options.deductibleReduction==true)
+		{
+			events[j].price+=events[j].persons;
+			events[j].commission.privateaser+=events[j].persons;
+		}
+	}
+}
+function Pay()
+{
+	for(var i=0;i<actors.length;i++)
+	{
+		for(var j=0;j<events.length;j++)
+		{
+			if(events[j].id==actors[i].eventId)
+			{
+				actors[i].payment[0].amount=events[j].price;
+				actors[i].payment[1].amount=events[j].price-(events[j].commission.insurance+events[j].commission.treasury+events[j].commission.privateaser);
+				actors[i].payment[2].amount=events[j].commission.insurance
+				actors[i].payment[3].amount=events[j].commission.treasury;
+				actors[i].payment[4].amount=events[j].commission.privateaser;
+				
+			}
+		}
+	}
+}
+//Q1
+//price();
+//Q2
+//priceDecrease();
+//Q3
+//Commission();
+//Q4
+Deduction();
+//Q5
+Pay();
 console.log(events);
 console.log(actors);
